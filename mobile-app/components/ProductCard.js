@@ -8,7 +8,7 @@ const ProductCard = ({ title, subtitle, price, image, onPress }) => {
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{subtitle}</Text>
-        <Text style={styles.price}>${price}</Text>
+        <Text style={styles.price}>€{price}</Text>
       </View>
     </TouchableOpacity>
   );

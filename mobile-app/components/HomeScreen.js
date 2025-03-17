@@ -15,11 +15,12 @@ const HomeScreen = ({ navigation }) => {
       .then((data) => {
         setProducts(
           data.items.map((item) => ({
-            id: item._id,
+            id: item.product.id,
             title: item.product.fieldData.name,
-            subtitle: item.product.fieldData['small-description'],
+            smallDescription: item.product.fieldData['small-description'],
+            description: item.product.fieldData.description,
             price: (item.skus[0]?.fieldData.price.value || 0) / 100,
-            image: { uri: item.skus[0]?.fieldData["main-image"]?.url }, 
+            image: { uri: item.skus[0]?.fieldData['main-image']?.url },
           }))
         );
       })
@@ -33,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
         <ProductCard
           key={product.id}
           title={product.title}
-          subtitle={product.subtitle}
+          subtitle={product.smallDescription}
           price={product.price}
           image={product.image}
           onPress={() => navigation.navigate('Details', { product })}

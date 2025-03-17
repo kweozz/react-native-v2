@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const ProductDetails = ({ route }) => {
   const { product } = route.params;
@@ -18,14 +18,17 @@ const ProductDetails = ({ route }) => {
     <View style={styles.container}>
       <Image source={product.image} style={styles.image} />
       <Text style={styles.title}>{product.title}</Text>
-      <Text style={styles.subtitle}>{product.subtitle}</Text>
-      <Text style={styles.price}>${product.price}</Text>
+      <Text style={styles.subtitle}>{product.description}</Text>
       <View style={styles.quantityContainer}>
-        <Button title="-" onPress={decreaseQuantity} />
+        <TouchableOpacity style={styles.button} onPress={decreaseQuantity}>
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
         <Text style={styles.quantity}>{quantity}</Text>
-        <Button title="+" onPress={increaseQuantity} />
+        <TouchableOpacity style={styles.button} onPress={increaseQuantity}>
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.totalPrice}>Total: ${totalPrice}</Text>
+      <Text style={styles.totalPrice}>Total: €{totalPrice}</Text>
     </View>
   );
 };
@@ -33,7 +36,6 @@ const ProductDetails = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#fff',
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#333',
   },
   subtitle: {
     fontSize: 18,
@@ -73,6 +76,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
+  },
+  button: {
+    backgroundColor: '#333',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
