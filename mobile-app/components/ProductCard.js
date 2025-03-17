@@ -19,12 +19,11 @@ const styles = StyleSheet.create({
     width: '40%',
     backgroundColor: '#fff',
     borderRadius: 10,
-    gap: 10,
-    margin: 10,
+    margin: 5,
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 160,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -35,6 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    textTransform: 'uppercase',
    
   },
   description: {
