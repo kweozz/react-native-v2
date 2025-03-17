@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     textTransform: 'uppercase',
-   
   },
   description: {
     fontSize: 14,
