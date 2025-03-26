@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import ProductCard from './ProductCard';
+import { Picker } from '@react-native-picker/picker';
 
+const categoryNames ={
+  "" : "All",
+  "67d8627627222d6515eac4f1" : "White Tea",
+  "67d864b242f2d5d651e4c0db" : "Black Tea",
+}
 const HomeScreen = ({ navigation }) => {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     fetch('https://api.webflow.com/v2/sites/67b358f17af1e77acbdef54c/products', {
@@ -21,12 +28,13 @@ const HomeScreen = ({ navigation }) => {
             description: item.product.fieldData.description,
             price: (item.skus[0]?.fieldData.price.value || 0) / 100,
             image: { uri: item.skus[0]?.fieldData['main-image']?.url },
+            category: categoryNames[item.product.fieldData.category [0]] || "Unknown",
           }))
         );
       })
       .catch((err) => console.error('Error:', err));
   }, []);
-
+ const filteredProducts = selectedCategory ? products.filter(p => p.category === selectedCategory) : products;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Our Teas</Text>
