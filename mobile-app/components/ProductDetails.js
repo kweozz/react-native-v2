@@ -3,6 +3,17 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const ProductDetails = ({ route }) => {
   const { product } = route.params;
+
+  console.log(product); // Debug the product object
+
+  if (!product) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Product details are not available.</Text>
+      </View>
+    );
+  }
+
   const [quantity, setQuantity] = useState(1);
 
   const increaseQuantity = () => setQuantity(quantity + 1);
@@ -12,7 +23,7 @@ const ProductDetails = ({ route }) => {
     }
   };
 
-  const totalPrice = (quantity * parseFloat(product.price)).toFixed(2);
+  const totalPrice = (quantity * parseFloat(product?.price || 0)).toFixed(2); // Default to 0 if price is undefined
 
   return (
     <View style={styles.container}>
@@ -39,6 +50,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#fff',
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
   },
   image: {
     width: '100%',

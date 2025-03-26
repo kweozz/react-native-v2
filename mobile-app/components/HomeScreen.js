@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, TextInput } from 'react-native';
 import ProductCard from './ProductCard';
 import { Picker } from '@react-native-picker/picker';
 
-const categoryNames ={
-  "" : "All",
-  "67d8627627222d6515eac4f1" : "White Tea",
-  "67d864b242f2d5d651e4c0db" : "Black Tea",
-}
+const categoryNames = {
+  "": "All",
+  "67d8627627222d6515eac4f1": "White Tea",
+  "67d864b242f2d5d651e4c0db": "Black Tea",
+};
+
 const HomeScreen = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isPickerOpen, setIsPickerOpen] = useState(false); // Track Picker interaction
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("price-asc");
 
   useEffect(() => {
     fetch('https://api.webflow.com/v2/sites/67b358f17af1e77acbdef54c/products', {
@@ -20,54 +24,142 @@ const HomeScreen = ({ navigation }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setProducts(
-          data.items.map((item) => ({
-            id: item.product.id,
-            title: item.product.fieldData.name,
-            smallDescription: item.product.fieldData['small-description'],
-            description: item.product.fieldData.description,
-            price: (item.skus[0]?.fieldData.price.value || 0) / 100,
-            image: { uri: item.skus[0]?.fieldData['main-image']?.url },
-            category: categoryNames[item.product.fieldData.category [0]] || "Unknown",
-          }))
-        );
+        const mappedProducts = data.items.map((item) => ({
+          id: item.product.id,
+          title: item.product.fieldData.name,
+          smallDescription: item.product.fieldData['small-description'],
+          description: item.product.fieldData.description,
+          price: item.skus[0]?.fieldData?.price?.value
+            ? (item.skus[0].fieldData.price.value || 0) / 100
+            : 0, // Default to 0 if price is undefined
+          image: item.skus[0]?.fieldData['main-image']
+            ? { uri: item.skus[0].fieldData['main-image'].url }
+            : null, // Default to null if image is undefined
+          category: categoryNames[item.product.fieldData.category?.[0]] || "Unknown",
+        }));
+  
+        console.log(mappedProducts); // Debug the products array
+        setProducts(mappedProducts);
       })
       .catch((err) => console.error('Error:', err));
   }, []);
- const filteredProducts = selectedCategory ? products.filter(p => p.category === selectedCategory) : products;
+
+  const filteredProducts = products
+    .filter((p) => (selectedCategory ? p.category === selectedCategory : true))
+    .filter((p) => p.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortOption === "price-asc") return a.price - b.price;
+    if (sortOption === "price-desc") return b.price - a.price;
+    if (sortOption === "name-asc") return a.title.localeCompare(b.title);
+    if (sortOption === "name-desc") return b.title.localeCompare(a.title);
+    return 0;
+  });
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Our Teas</Text>
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          title={product.title}
-          subtitle={product.smallDescription}
-          price={product.price}
-          image={product.image}
-          onPress={() => navigation.navigate('Details', { product })}
+    <View style={styles.container}>
+      <Text style={styles.heading}>Onze modellen</Text>
+
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Zoek een model..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
         />
-      ))}
-    </ScrollView>
+      </View>
+
+      {/* Category Filter */}
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={selectedCategory}
+          onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+          onFocus={() => setIsPickerOpen(true)} // Set flag when Picker is focused
+          onBlur={() => setIsPickerOpen(false)} // Reset flag when Picker loses focus
+          style={styles.picker}
+        >
+          <Picker.Item label="Alle categorieën" value="" />
+          {[...new Set(products.map((p) => p.category))].map((category) => (
+            <Picker.Item key={category} label={category} value={category} />
+          ))}
+        </Picker>
+      </View>
+
+      {/* Sorting Dropdown */}
+      <View style={styles.sortContainer}>
+        <Picker
+          selectedValue={sortOption}
+          onValueChange={(itemValue) => setSortOption(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Prijs oplopend" value="price-asc" />
+          <Picker.Item label="Prijs aflopend" value="price-desc" />
+          <Picker.Item label="Naam A-Z" value="name-asc" />
+          <Picker.Item label="Naam Z-A" value="name-desc" />
+        </Picker>
+      </View>
+
+      {/* Product List */}
+      <ScrollView contentContainerStyle={styles.cardContainer}>
+        <View style={styles.row}>
+          {sortedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              {...product}
+              onPress={() => navigation.navigate('Details', product)}
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 10,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  pickerContainer: {
+    marginBottom: 20,
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+  },
+  cardContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    backgroundColor: '#fff',
-    height: '100%',
-    padding: 10,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    margin: 10,
-    width: '100%',
-    textAlign: 'center',
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  searchContainer: {
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+  searchInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
+  },
+  sortContainer: {
+    marginBottom: 20,
+    paddingHorizontal: 10,
   },
 });
 
