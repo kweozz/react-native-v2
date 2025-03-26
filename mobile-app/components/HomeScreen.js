@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Onze modellen</Text>
+      <Text style={styles.heading}>Our Tea's</Text>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
@@ -104,11 +104,14 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.cardContainer}>
         <View style={styles.row}>
           {sortedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              {...product}
-              onPress={() => navigation.navigate('Details', product)}
-            />
+           <ProductCard
+           key={product.id}
+           title={product.title}
+           subtitle={product.smallDescription}
+           price={product.price}
+           image={product.image}
+           onPress={() => navigation.navigate('Details', { product })}
+         />
           ))}
         </View>
       </ScrollView>
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    textTransform: 'uppercase',
     marginBottom: 10,
   },
   pickerContainer: {
