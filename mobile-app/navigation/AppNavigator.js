@@ -8,19 +8,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../components/HomeScreen';
 import ProductDetails from '../components/ProductDetails';
 import BlogScreen from '../components/BlogScreen'; // Importeer je BlogScreen component
+import LandingPage from '../components/LandingPage'; // Importeer je LandingPage component
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-// Stack Navigator voor de Shop-sectie
-const ShopStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Shop" component={HomeScreen} />
-      <Stack.Screen name="Details" component={ProductDetails} />
-    </Stack.Navigator>
-  );
-};
 
 // Bottom Tab Navigator
 const AppNavigator = () => {
@@ -45,9 +37,9 @@ const AppNavigator = () => {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Shop" component={ShopStack} options={{ headerShown: false }} />
-        <Tab.Screen name="Blog" component={BlogScreen} />
+        <Tab.Screen name="Home" component={LandingPage} options={{ headerShown: false }} />
+        <Tab.Screen name="Shop" component={HomeScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Blog" component={BlogScreen} options={{ headerShown: false }} />
       </Tab.Navigator>
     </NavigationContainer>
   );

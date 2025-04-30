@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Text, TextInput } from 'react-native';
 import ProductCard from './ProductCard';
 import { Picker } from '@react-native-picker/picker';
-
+//hier staan al mijn categorieen
 const categoryNames = {
   "": "All",
   "67d8627627222d6515eac4f1": "White Tea",
@@ -31,10 +31,10 @@ const HomeScreen = ({ navigation }) => {
           description: item.product.fieldData.description,
           price: item.skus[0]?.fieldData?.price?.value
             ? (item.skus[0].fieldData.price.value || 0) / 100
-            : 0, // Default to 0 if price is undefined
+            : 0, // standaard 0 if undefined
           image: item.skus[0]?.fieldData['main-image']
-            ? { uri: item.skus[0].fieldData['main-image'].url }
-            : null, // Default to null if image is undefined
+            ? { uri: item.skus[0].fieldData['main-image'].url } //skus is een array, een variant van een product
+            : null, 
           category: categoryNames[item.product.fieldData.category?.[0]] || "Unknown",
         }));
   
@@ -51,6 +51,7 @@ const HomeScreen = ({ navigation }) => {
     if (sortOption === "price-asc") return a.price - b.price;
     if (sortOption === "price-desc") return b.price - a.price;
     if (sortOption === "name-asc") return a.title.localeCompare(b.title);
+    //localeCompare is used for string comparison, it compares two strings in the current locale. 
     if (sortOption === "name-desc") return b.title.localeCompare(a.title);
     return 0;
   });
@@ -122,12 +123,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 10,
+    padding: 20,
   },
   heading: {
     fontSize: 24,
+    marginTop: 64,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'left',
     textTransform: 'uppercase',
     marginBottom: 10,
   },
@@ -135,8 +137,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   picker: {
-    height: 50,
+    height: 'auto',
     width: '100%',
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 10,
   },
   cardContainer: {
     flexDirection: 'row',

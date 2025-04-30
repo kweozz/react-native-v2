@@ -16,10 +16,10 @@ const ProductCard = ({ title, subtitle, price, image, onPress }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: '40%',
+    width: '47%',
     backgroundColor: '#fff',
     borderRadius: 10,
-    margin: 5,
+    marginBottom: 10,
   },
   image: {
     width: '100%',

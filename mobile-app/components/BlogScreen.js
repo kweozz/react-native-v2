@@ -9,8 +9,7 @@ const BlogScreen = () => {
     // Fetch blog data from the correct Webflow API endpoint
     fetch('https://api.webflow.com/v2/collections/67bcde1d3ccada6a40b85496/items', {
       headers: {
-        Authorization: 'Bearer d075944cfe6d8779aeae94bf6a17e25ee464b3cc35bc8e83dd7284c7fbf0e6dd',
-        'accept-version': '1.0.0', // Ensure the correct API version is used
+        Authorization: 'Bearer d075944cfe6d8779aeae94bf6a17e25ee464b3cc35bc8e83dd7284c7fbf0e6dd'
       },
     })
       .then((res) => res.json())
@@ -74,6 +73,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   heading: {
+    marginTop: 64,
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    textTransform: 'uppercase',
   },
   description: {
     fontSize: 14,
