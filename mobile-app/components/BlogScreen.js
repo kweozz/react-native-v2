@@ -17,12 +17,12 @@ const BlogScreen = () => {
       .then((data) => {
         if (data.items) {
           const mappedBlogs = data.items.map((item) => ({
-            id: item._id, // Unique ID for the blog post*
-            title: item['name'], // Blog post title
-            description: item['description'], // Blog post description
-            date: new Date(item['createdOn']).toLocaleDateString(), // Format the date
-            image: item['main-image']
-              ? { uri: item['main-image'].url }
+            id: item._id, // Unique ID for the blog post
+            title: item.fieldData.name, // Blog title
+            description: item.fieldData['post-summary'], // Blog summary
+            date: new Date(item.createdOn).toLocaleDateString(), // Format the date
+            image: item.fieldData['main-image']
+              ? { uri: item.fieldData['main-image'].url }
               : null, // Main image URL
           }));
           setBlogs(mappedBlogs);
