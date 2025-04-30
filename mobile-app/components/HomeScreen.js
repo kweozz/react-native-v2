@@ -38,7 +38,6 @@ const HomeScreen = ({ navigation }) => {
           category: categoryNames[item.product.fieldData.category?.[0]] || "Unknown",
         }));
   
-        console.log(mappedProducts); // Debug the products array
         setProducts(mappedProducts);
       })
       .catch((err) => console.error('Error:', err));
