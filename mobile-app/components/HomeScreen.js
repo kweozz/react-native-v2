@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
     if (sortOption === "price-asc") return a.price - b.price;
     if (sortOption === "price-desc") return b.price - a.price;
     if (sortOption === "name-asc") return a.title.localeCompare(b.title);
-    //localeCompare is used for string comparison, it compares two strings in the current locale. 
+    //localeCompare is used for string comparison, it compares two strings in the current locale. dit is nodig 
     if (sortOption === "name-desc") return b.title.localeCompare(a.title);
     return 0;
   });
@@ -75,8 +75,6 @@ const HomeScreen = ({ navigation }) => {
         <Picker
           selectedValue={selectedCategory}
           onValueChange={(itemValue) => setSelectedCategory(itemValue)}
-          onFocus={() => setIsPickerOpen(true)} // Set flag when Picker is focused
-          onBlur={() => setIsPickerOpen(false)} // Reset flag when Picker loses focus
           style={styles.picker}
         >
           <Picker.Item label="Alle categorieën" value="" />
