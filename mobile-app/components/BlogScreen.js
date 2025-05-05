@@ -74,8 +74,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginTop: 64,
-    fontSize: 32,
+    fontSize: 44,
     fontWeight: 'bold',
+    color: '#222020',
+    textTransform: 'uppercase',
     marginBottom: 20,
     textAlign: 'left',
   },
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#222020',
     textTransform: 'uppercase',
   },
   description: {

@@ -41,12 +41,16 @@ const LandingPage = ({ navigation }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.items) {
-          const mappedBlogs = data.items.map((item) => ({
-            id: item._id,
-            title: item.fieldData.name,
-            summary: item.fieldData['post-summary'],
-            image: item.fieldData['main-image'] ? { uri: item.fieldData['main-image'].url } : null,
-          }));
+          const mappedBlogs = data.items
+            .map((item) => ({
+              id: item._id,
+              title: item.fieldData.name,
+              summary: item.fieldData['post-summary'],
+              date: item.createdOn, // Add the created date
+              image: item.fieldData['main-image'] ? { uri: item.fieldData['main-image'].url } : null,
+            }))
+            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date (newest first)
+            .slice(0, 3); // Get the latest 3 articles
           setBlogs(mappedBlogs);
         }
       })
@@ -96,26 +100,25 @@ const LandingPage = ({ navigation }) => {
         </ScrollView>
       </View>
 
-      {/* Blog Carousel */}
-      <View style={styles.categoriesContainer}>
-        <Text style={styles.categoriesHeading}>Latest Articles</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.carousel}
-        >
-          {blogs.map((blog) => (
-            <TouchableOpacity
-              key={blog.id}
-              style={styles.categoryCard}
-              onPress={() => navigation.navigate('BlogDetails', { blogId: blog.id })}
-            >
-              {blog.image && <Image source={blog.image} style={styles.categoryImage} />}
-              <Text style={styles.categoryName}>{blog.title}</Text>
-              <Text style={styles.categoryDescription}>{new Date(blog.createdOn).toLocaleDateString()}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+      {/* Blog Section */}
+      <View style={styles.blogContainer}>
+        <View style={styles.blogHeader}>
+        <Text style={styles.blogHeading}>Journal</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Blog')}>
+          <Text style={styles.blogLink}>Read all stories</Text>
+        </TouchableOpacity>
+        </View>
+        {blogs.map((blog) => (
+          <TouchableOpacity
+            key={blog.id}
+            style={styles.blogCard}
+            onPress={() => navigation.navigate('BlogDetails', { blogId: blog.id })}
+          >
+            <Text style={styles.blogDate}>{new Date(blog.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</Text>
+            <Text style={styles.blogTitle}>{blog.title}</Text>
+            <View style={styles.divider} />
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );
@@ -124,10 +127,11 @@ const LandingPage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
+    fontFamily: 'Montserrat',
   },
   background: {
-    height: 600,
+    height: 500,
     resizeMode: 'cover',
     justifyContent: 'center',
   },
@@ -135,32 +139,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a dark overlay for better text visibility
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
   },
   heading: {
-    fontSize: 36,
+    fontSize: 44,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    color: '#fff',
+    color: '#FFFFFF',
     marginBottom: 20,
   },
   subtitle: {
     fontSize: 18,
-    color: '#ddd',
+    color: '#ffffff',
     marginBottom: 30,
     lineHeight: 24,
   },
   button: {
-    backgroundColor: '#E91E63', // Use a bold accent color for the button
+    backgroundColor: '#222020', 
     paddingVertical: 15,
     paddingHorizontal: 40,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   categoriesContainer: {
     padding: 20,
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textTransform: 'uppercase',
-    color: '#333',
+    color: '#222020',
   },
   carousel: {
     flexDirection: 'row',
@@ -194,6 +198,48 @@ const styles = StyleSheet.create({
   categoryDescription: {
     fontSize: 14,
     color: '#666',
+  },
+  blogContainer: {
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  blogHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  blogHeading: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: '#222020',
+ 
+  },
+  blogLink: {
+    fontSize: 14,
+    color: '#B8B7B7',
+    textAlign: 'right',
+  },
+  blogCard: {
+    marginBottom: 20,
+  },
+  blogDate: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 5,
+  },
+  blogTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#222020',
+    marginBottom: 10,
+  },
+  divider: {
+    height: 2,
+    backgroundColor: '#B8B7B7',
+    marginTop: 10,
   },
 });
 

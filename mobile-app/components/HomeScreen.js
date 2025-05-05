@@ -122,9 +122,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    fontFamily: 'poppins',
   },
   heading: {
-    fontSize: 24,
+    fontSize: 44,
     marginTop: 64,
     fontWeight: 'bold',
     textAlign: 'left',
