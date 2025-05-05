@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#222020',
   },
 });
 

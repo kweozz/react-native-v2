@@ -24,8 +24,31 @@ const ShopStack = () => {
       />
       <Stack.Screen
         name="Details"
-        component={ProductDetails}
-        options={{ title: 'Product Details' }} // Customize the header for ProductDetails
+        component={ProductDetails} // only show the back arrow when navigating to this screen, not the name
+        options={({ route }) => ({
+          title: route.params.product.title, // Show the product title in the header
+          headerBackTitleVisible: false, // Hide the back button text
+          //  FONTSIZE 44 
+          headerStyle: {
+            backgroundColor: '#fff', // Change the header background color to match your theme
+            shadowColor: 'transparent', // Remove the shadow on iOS
+            elevation: 0, // Remove the shadow on Android
+            height: 200, // Set the height of the header
+            display: 'flex', // Ensure the header is displayed
+          },
+          headerTitleStyle: {
+            fontSize: 40, // Change the font size of the title
+            color: '#222020', // Change the title color to match your theme
+            fontWeight: 'bold', // Make the title bold
+            textTransform: 'uppercase', // Make the title uppercase
+          },
+          //back arrow size
+          headerBackImage: () => (
+            <Icon name="arrow-back" size={40} color="#222020" /> // Change the back arrow icon size and color
+          ),
+        
+        })}
+       
       />
     </Stack.Navigator>
   );
@@ -50,7 +73,7 @@ const AppNavigator = () => {
 
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#333',
+          tabBarActiveTintColor: '#222020',
           tabBarInactiveTintColor: 'gray',
         })}
       >

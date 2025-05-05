@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ProductDetails = ({ route }) => {
   const { product } = route.params;
@@ -26,9 +27,9 @@ const ProductDetails = ({ route }) => {
   const totalPrice = (quantity * parseFloat(product?.price || 0)).toFixed(2); // Default to 0 if price is undefined
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image source={product.image} style={styles.image} />
-      <Text style={styles.title}>{product.title}</Text>
+  
       <Text style={styles.subtitle}>{product.description}</Text>
       <View style={styles.quantityContainer}>
         <TouchableOpacity style={styles.button} onPress={decreaseQuantity}>
@@ -40,15 +41,15 @@ const ProductDetails = ({ route }) => {
         </TouchableOpacity>
       </View>
       <Text style={styles.totalPrice}>Total: €{totalPrice}</Text>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 20,
+    paddingTop: 0,
     backgroundColor: '#fff',
   },
   errorText: {
@@ -63,10 +64,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333',
+    color: '#222020',
   },
   subtitle: {
     fontSize: 18,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#222020',
     marginBottom: 20,
   },
   quantityContainer: {
@@ -91,10 +92,10 @@ const styles = StyleSheet.create({
   totalPrice: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#222020',
   },
   button: {
-    backgroundColor: '#333',
+    backgroundColor: '#222020',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
