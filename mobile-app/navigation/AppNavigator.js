@@ -5,14 +5,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // Importeer je schermen
-import HomeScreen from '../components/HomeScreen';
-import ProductDetails from '../components/ProductDetails';
-import BlogScreen from '../components/BlogScreen'; // Importeer je BlogScreen component
-import LandingPage from '../components/LandingPage'; // Importeer je LandingPage component
+import HomeScreen from '../screens/HomeScreen';
+import ProductDetails from '../screens/ProductDetails';
+import BlogScreen from '../screens/BlogScreen'; // Importeer je BlogScreen component
+import LandingPage from '../screens/LandingPage'; // Importeer je LandingPage component
 
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator(); // Create a Bottom Tab Navigator for the main sections of the app
+const Stack = createStackNavigator(); // Create a Stack Navigator for the Shop section
+
 
 const ShopStack = () => {
   return (
@@ -28,7 +29,7 @@ const ShopStack = () => {
         options={({ route }) => ({
           title: route.params.product.title, // Show the product title in the header
           headerBackTitleVisible: false, // Hide the back button text
-          //  FONTSIZE 44 
+          
           headerStyle: {
             backgroundColor: '#fff', // Change the header background color to match your theme
             shadowColor: 'transparent', // Remove the shadow on iOS
@@ -77,7 +78,8 @@ const AppNavigator = () => {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Home" component={LandingPage} options={{ headerShown: false }} />
+      {/* Define the screens for the bottom tab navigator */}
+        <Tab.Screen name="Home" component={LandingPage} options={{ headerShown: false }} /> 
         <Tab.Screen name="Shop" component={ShopStack} options={{ headerShown: false }} />
         <Tab.Screen name="Blog" component={BlogScreen} options={{ headerShown: false }} />
       </Tab.Navigator>

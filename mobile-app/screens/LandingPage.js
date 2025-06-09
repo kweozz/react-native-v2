@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    fontFamily: 'Montserrat',
   },
   background: {
     height: 500,
@@ -153,6 +152,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     marginBottom: 30,
     lineHeight: 24,
+     fontFamily: 'Golos-Regular',
   },
   button: {
     backgroundColor: '#222020', 
