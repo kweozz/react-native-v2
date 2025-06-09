@@ -3,7 +3,8 @@ import { View, StyleSheet, Text } from 'react-native';
 import CategoryPicker from '../components/CategoryPicker';
 import SortPicker from '../components/SortPicker';
 import ProductList from '../components/ProductList';
-import SearchBar from '../components/SearchBar';
+import Search from '../components/Search';
+
 
 const categoryNames = {
   "": "All",
@@ -61,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Our Tea's</Text>
-      <SearchBar value={searchQuery} onChange={setSearchQuery} />
+      <Search value={searchQuery} onChange={setSearchQuery} />
       <CategoryPicker
         selectedCategory={selectedCategory}
         onSelect={setSelectedCategory}
