@@ -19,37 +19,33 @@ const ShopStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Shop"
+        name="ShopHome" // <-- Changed from "Shop"
         component={HomeScreen}
-        options={{ headerShown: false }} // Hide the header for the HomeScreen
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Details"
-        component={ProductDetails} // only show the back arrow when navigating to this screen, not the name
+        component={ProductDetails}
         options={({ route }) => ({
-          title: route.params.product.title, // Show the product title in the header
-          headerBackTitleVisible: false, // Hide the back button text
-          
+          title: route.params.product.title,
+          headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: '#fff', // Change the header background color to match your theme
-            shadowColor: 'transparent', // Remove the shadow on iOS
-            elevation: 0, // Remove the shadow on Android
-            height: 200, // Set the height of the header
-            display: 'flex', // Ensure the header is displayed
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 200,
+            display: 'flex',
           },
           headerTitleStyle: {
-            fontSize: 40, // Change the font size of the title
-            color: '#222020', // Change the title color to match your theme
-            fontWeight: 'bold', // Make the title bold
-            textTransform: 'uppercase', // Make the title uppercase
+            fontSize: 40,
+            color: '#222020',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
           },
-          //back arrow size
           headerBackImage: () => (
-            <Icon name="arrow-back" size={40} color="#222020" /> // Change the back arrow icon size and color
+            <Icon name="arrow-back" size={40} color="#222020" />
           ),
-        
         })}
-       
       />
     </Stack.Navigator>
   );

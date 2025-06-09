@@ -10,6 +10,7 @@ const categoryNames = {
   "": "All",
   "67d8627627222d6515eac4f1": "White Tea",
   "67d864b242f2d5d651e4c0db": "Black Tea",
+  "68422e818f346b6d0e57311d": "Green Tea"
 };
 
 const HomeScreen = ({ navigation }) => {

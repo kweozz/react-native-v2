@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native';
+import Button from '../components/Button';
 
 // Import local images
 import whiteTeaImage from '../assets/white.webp';
@@ -69,12 +70,11 @@ const LandingPage = ({ navigation }) => {
           <Text style={styles.subtitle}>
             Discover the finest selection of teas, carefully curated for every taste.
           </Text>
-          <TouchableOpacity
-            style={styles.button}
+          <Button
+            title="Shop Now"
             onPress={() => navigation.navigate('Shop')}
-          >
-            <Text style={styles.buttonText}>Shop Now</Text>
-          </TouchableOpacity>
+            style={styles.button}
+          />
         </View>
       </ImageBackground>
 
