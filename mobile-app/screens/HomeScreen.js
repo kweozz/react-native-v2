@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import CategoryPicker from '../components/CategoryPicker';
 import SortPicker from '../components/SortPicker';
-import ProductList from '../components/ProductList';
 import Search from '../components/Search';
-
+import ProductCard from '../components/ProductCard'; // <--- behouden
 
 const categoryNames = {
   "": "All",
@@ -33,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
           smallDescription: item.product.fieldData['small-description'],
           description: item.product.fieldData.description,
           price: item.skus[0]?.fieldData?.price?.value
-            ? (item.skus[0].fieldData.price.value || 0) / 100
+            ? item.skus[0].fieldData.price.value / 100
             : 0,
           image: item.skus[0]?.fieldData['main-image']
             ? { uri: item.skus[0].fieldData['main-image'].url }
@@ -57,7 +56,6 @@ const HomeScreen = ({ navigation }) => {
     return 0;
   });
 
-  // Verzamel unieke categorieën voor de picker
   const uniqueCategories = [...new Set(products.map((p) => p.category))];
 
   return (
@@ -70,10 +68,21 @@ const HomeScreen = ({ navigation }) => {
         categories={uniqueCategories}
       />
       <SortPicker sortOption={sortOption} onSortChange={setSortOption} />
-      <ProductList
-        products={sortedProducts}
-        onProductPress={(product) => navigation.navigate('Details', { product })}
-      />
+      
+      <ScrollView contentContainerStyle={styles.cardContainer}>
+        <View style={styles.row}>
+          {sortedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              title={product.title}
+              subtitle={product.smallDescription}
+              price={product.price}
+              image={product.image}
+              onPress={() => navigation.navigate('Details', { product })}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -92,12 +101,15 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 10,
   },
-  subtitle: {
-    fontFamily: 'Golos-Regular',
-    fontSize: 20,
-    marginTop: 10,
-    marginBottom: 20,
-    color: '#666',
+  cardContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
 });
 

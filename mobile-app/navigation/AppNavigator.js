@@ -9,6 +9,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ProductDetails from '../screens/ProductDetails';
 import BlogScreen from '../screens/BlogScreen'; // Importeer je BlogScreen component
 import LandingPage from '../screens/LandingPage'; // Importeer je LandingPage component
+import BlogDetails from '../screens/BlogDetails';
 
 
 const Tab = createBottomTabNavigator(); // Create a Bottom Tab Navigator for the main sections of the app
@@ -19,7 +20,7 @@ const ShopStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="ShopHome" // <-- Changed from "Shop"
+        name="ShopHome" 
         component={HomeScreen}
         options={{ headerShown: false }}
       />
@@ -33,7 +34,7 @@ const ShopStack = () => {
             backgroundColor: '#fff',
             shadowColor: 'transparent',
             elevation: 0,
-            height: 200,
+            height: 160,
             display: 'flex',
           },
           headerTitleStyle: {
@@ -41,6 +42,7 @@ const ShopStack = () => {
             color: '#222020',
             fontWeight: 'bold',
             textTransform: 'uppercase',
+            fontFamily: 'Golos-Bold', // <-- hier!
           },
           headerBackImage: () => (
             <Icon name="arrow-back" size={40} color="#222020" />
@@ -50,6 +52,43 @@ const ShopStack = () => {
     </Stack.Navigator>
   );
 };
+
+const BlogStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="BlogHome"
+        component={BlogScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BlogDetails"
+        component={BlogDetails}
+        options={{
+          title: 'Blog Details',
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: 'transparent',
+            elevation: 0,
+            height: 160,
+            display: 'flex',
+          },
+          headerTitleStyle: {
+            fontSize: 40,
+            color: '#222020',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            fontFamily: 'Golos-Bold', // <-- hier!
+          },
+          headerBackImage: () => (
+            <Icon name="arrow-back" size={40} color="#222020" />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 // Bottom Tab Navigator
 const AppNavigator = () => {
@@ -77,7 +116,7 @@ const AppNavigator = () => {
       {/* Define the screens for the bottom tab navigator */}
         <Tab.Screen name="Home" component={LandingPage} options={{ headerShown: false }} /> 
         <Tab.Screen name="Shop" component={ShopStack} options={{ headerShown: false }} />
-        <Tab.Screen name="Blog" component={BlogScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Blog" component={BlogStack} options={{ headerShown: false }} />
       </Tab.Navigator>
     </NavigationContainer>
   );

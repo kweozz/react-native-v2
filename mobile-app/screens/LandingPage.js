@@ -44,10 +44,10 @@ const LandingPage = ({ navigation }) => {
         if (data.items) {
           const mappedBlogs = data.items
             .map((item) => ({
-              id: item._id,
+              id: item.id, // <-- Gebruik altijd 'id'
               title: item.fieldData.name,
               summary: item.fieldData['post-summary'],
-              date: item.createdOn, // Add the created date
+              date: item.createdOn,
               image: item.fieldData['main-image'] ? { uri: item.fieldData['main-image'].url } : null,
             }))
             .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date (newest first)
@@ -112,7 +112,12 @@ const LandingPage = ({ navigation }) => {
           <TouchableOpacity
             key={blog.id}
             style={styles.blogCard}
-            onPress={() => navigation.navigate('BlogDetails', { blogId: blog.id })}
+            onPress={() =>
+  navigation.navigate('Blog', {
+    screen: 'BlogDetails',
+    params: { blogId: blog.id }
+  })
+}
           >
             <Text style={styles.blogDate}>{new Date(blog.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</Text>
             <Text style={styles.blogTitle}>{blog.title}</Text>
