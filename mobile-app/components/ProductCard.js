@@ -31,9 +31,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontSize: 35,
-     fontFamily: 'Golos-Regular',
-    fontWeight: 'bold',
+    fontSize: 22,
+     fontFamily: 'Golos-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
   },

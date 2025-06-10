@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Golos-Bold',
     fontSize: 44,
     marginTop: 64,
-    fontWeight: 'bold',
     textAlign: 'left',
     textTransform: 'uppercase',
     marginBottom: 10,

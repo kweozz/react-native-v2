@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontWeight: 'bold',
+   fontFamily: 'Golos-Bold',
     textAlign: 'center',
   },
   categoriesContainer: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   categoriesHeading: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontFamily: 'Golos-Bold',
     marginBottom: 20,
     textTransform: 'uppercase',
     color: '#222020',
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Golos-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',
   },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
 
   blogHeading: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontFamily: 'Golos-Bold',
     textTransform: 'uppercase',
     color: '#222020',
  
@@ -232,7 +232,8 @@ const styles = StyleSheet.create({
   },
   blogTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Golos-Bold',
+    textTransform: 'uppercase',
     color: '#222020',
     marginBottom: 10,
   },
