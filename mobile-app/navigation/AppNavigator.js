@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import ProductDetails from '../screens/ProductDetails';
 import BlogScreen from '../screens/BlogScreen'; // Importeer je BlogScreen component
 import LandingPage from '../screens/LandingPage'; // Importeer je LandingPage component
 import BlogDetails from '../screens/BlogDetails';
+import WishlistScreen from '../screens/WishlistScreen'; // Importeer je WishlistScreen component
 
 
 const Tab = createBottomTabNavigator(); // Create a Bottom Tab Navigator for the main sections of the app
@@ -29,7 +30,8 @@ const ShopStack = () => {
         component={ProductDetails}
         options={({ route }) => ({
           title: route.params.product.title,
-          headerBackTitleVisible: false,
+          //back button add
+
           headerStyle: {
             backgroundColor: '#fff',
             shadowColor: 'transparent',
@@ -92,6 +94,18 @@ const BlogStack = () => {
 
 // Bottom Tab Navigator
 const AppNavigator = () => {
+  // Zet de wishlist state hier, zodat je hem overal kunt gebruiken
+  const [wishlist, setWishlist] = useState([]);
+
+  // Toggle-functie voor wishlist
+  const toggleWishlist = (product) => {
+    setWishlist((prev) =>
+      prev.find((p) => p.id === product.id)
+        ? prev.filter((p) => p.id !== product.id)
+        : [...prev, product]
+    );
+  };
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -105,6 +119,8 @@ const AppNavigator = () => {
               iconName = focused ? 'cart' : 'cart-outline';
             } else if (route.name === 'Blog') {
               iconName = focused ? 'book' : 'book-outline';
+            } else if (route.name === 'Wishlist') {
+              iconName = focused ? 'heart' : 'heart-outline';
             }
 
             return <Icon name={iconName} size={size} color={color} />;
@@ -114,9 +130,49 @@ const AppNavigator = () => {
         })}
       >
       {/* Define the screens for the bottom tab navigator */}
-        <Tab.Screen name="Home" component={LandingPage} options={{ headerShown: false }} /> 
-        <Tab.Screen name="Shop" component={ShopStack} options={{ headerShown: false }} />
-        <Tab.Screen name="Blog" component={BlogStack} options={{ headerShown: false }} />
+        <Tab.Screen
+          name="Home"
+          options={{ headerShown: false }}
+        >
+          {props => (
+            <LandingPage {...props} />
+          )}
+        </Tab.Screen>
+        <Tab.Screen
+          name="Shop"
+          options={{ headerShown: false }}
+        >
+          {props => (
+            <ShopStack
+              {...props}
+              wishlist={wishlist}
+              toggleWishlist={toggleWishlist}
+            />
+          )}
+        </Tab.Screen>
+        <Tab.Screen
+          name="Blog"
+          component={BlogStack}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Wishlist"
+          options={{
+            tabBarLabel: 'Wishlist',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="heart" color={color} size={size} />
+            ),
+            headerShown: false,
+          }}
+        >
+          {props => (
+            <WishlistScreen
+              {...props}
+              wishlist={wishlist}
+              toggleWishlist={toggleWishlist}
+            />
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );

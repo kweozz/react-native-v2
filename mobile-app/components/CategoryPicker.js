@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: { marginBottom: 20 },
   picker: {
     height: 'auto',
-    width: '50%',
+    width: '100%',
     backgroundColor: '#fff',
     borderColor: '#ccc',
     borderWidth: 1,

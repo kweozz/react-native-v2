@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   picker: {
-    width: '50%',
+    width: '100%',
     // fontFamily werkt meestal niet!
   },
   pickerItem: {

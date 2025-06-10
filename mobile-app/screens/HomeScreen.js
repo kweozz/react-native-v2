@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import CategoryPicker from '../components/CategoryPicker';
 import SortPicker from '../components/SortPicker';
 import Search from '../components/Search';
-import ProductCard from '../components/ProductCard'; // <--- behouden
+import ProductCard from '../components/ProductCard';
+import Icon from 'react-native-vector-icons/Ionicons'; // Voor het wishlist-icoon
 
 const categoryNames = {
   "": "All",
@@ -17,6 +18,17 @@ const HomeScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("price-asc");
+  const [wishlist, setWishlist] = useState([]); // Hier bewaar je de wishlist
+
+  // Deze functie voegt een product toe aan de wishlist als het er nog niet in zit,
+  // en verwijdert het als het er al in zit (toggle functionaliteit).
+  const toggleWishlist = (product) => {
+    setWishlist((prev) =>
+      prev.find((p) => p.id === product.id)
+        ? prev.filter((p) => p.id !== product.id) // Verwijder als hij er al in zit
+        : [...prev, product] // Voeg toe als hij er nog niet in zit
+    );
+  };
 
   useEffect(() => {
     fetch('https://api.webflow.com/v2/sites/67b358f17af1e77acbdef54c/products', {
@@ -68,7 +80,28 @@ const HomeScreen = ({ navigation }) => {
         categories={uniqueCategories}
       />
       <SortPicker sortOption={sortOption} onSortChange={setSortOption} />
-      
+
+      {/* Wishlist-knop rechtsboven, toont het aantal producten in de wishlist */}
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#222020',
+            borderRadius: 20,
+            paddingVertical: 6,
+            paddingHorizontal: 16,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+          // Hier zou je eventueel naar een WishlistScreen kunnen navigeren
+          onPress={() => { /* eventueel navigatie naar wishlist */ }}
+        >
+          <Icon name="heart" size={20} color="#fff" style={{ marginRight: 6 }} />
+          <Text style={{ color: '#fff', fontFamily: 'Golos-Bold' }}>
+            Wishlist ({wishlist.length})
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView contentContainerStyle={styles.cardContainer}>
         <View style={styles.row}>
           {sortedProducts.map((product) => (
@@ -79,6 +112,10 @@ const HomeScreen = ({ navigation }) => {
               price={product.price}
               image={product.image}
               onPress={() => navigation.navigate('Details', { product })}
+              // Geef door of het product in de wishlist zit
+              wishlistActive={wishlist.some((p) => p.id === product.id)}
+              // Geef de toggle functie door aan het hartje
+              onWishlistPress={() => toggleWishlist(product)}
             />
           ))}
         </View>
