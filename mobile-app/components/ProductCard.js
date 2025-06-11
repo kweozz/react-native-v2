@@ -1,20 +1,15 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Voor het hartje
+import Icon from 'react-native-vector-icons/Ionicons';
 
-// Extra props: wishlistActive (true/false) en onWishlistPress (functie)
-const ProductCard = ({ title, subtitle, price, image, onPress, wishlistActive, onWishlistPress }) => {
+const ProductCard = ({ title, subtitle, price, image, onPress, onWishlistPress, wishlistActive }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image source={image} style={styles.image} />
-      {/* Wishlist-knop rechtsboven op de kaart */}
-      <TouchableOpacity onPress={onWishlistPress} style={styles.wishlistButton}>
-        <Icon
-          name={wishlistActive ? 'heart' : 'heart-outline'}
-          size={24}
-          color={wishlistActive ? '#e63946' : '#222020'}
-        />
-      </TouchableOpacity>
+           {/* Heart icon for wishlist functionality */}
+      <TouchableOpacity onPress={onWishlistPress} style={styles.heartIcon}>
+        <Icon name={wishlistActive ? 'heart' : 'heart-outline'} size={22} color="#e63946" />
+      </TouchableOpacity> 
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{subtitle}</Text>
@@ -24,16 +19,10 @@ const ProductCard = ({ title, subtitle, price, image, onPress, wishlistActive, o
   );
 };
 
-/*
-  Uitleg:
-  - wishlistActive: bepaalt of het hartje gevuld is (♥) of leeg (♡)
-  - onWishlistPress: wordt aangeroepen als je op het hartje drukt
-  - Zo kun je elk product makkelijk aan/uit je wishlist zetten
-*/
-
 const styles = StyleSheet.create({
   card: {
     width: '47%',
+    minWidth: 160,
     backgroundColor: '#fff',
     borderRadius: 10,
     marginBottom: 10,
@@ -45,20 +34,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  wishlistButton: {
+  heartIcon: {
     position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 2,
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 2,
+    top: 8,
+    right: 8,
+    zIndex: 10,
   },
   textContainer: {
     padding: 10,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: 'Golos-Bold',
     marginBottom: 5,
     textTransform: 'uppercase',

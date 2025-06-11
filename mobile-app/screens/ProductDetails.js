@@ -3,9 +3,8 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const ProductDetails = ({ route }) => {
-  const { product } = route.params;
-
-  console.log(product); // Debug the product object
+  const { product } = route.params; // Haal het product op uit de route parameters
+  // Controleer of het product bestaat
 
   if (!product) {
     return (
@@ -15,7 +14,13 @@ const ProductDetails = ({ route }) => {
     );
   }
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1); // deze functie werkt met de state van de hoeveelheid
+  // Initialiseer de hoeveelheid op 1 
+  // en zorg ervoor dat deze niet onder de 1 kan gaan
+  // bij het laden van de pagina
+  // en dat de gebruiker deze kan verhogen of verlagen
+  // met de knoppen + en -.
+  // De totale prijs wordt berekend op basis van de hoeveelheid en de prijs van het product
 
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => {

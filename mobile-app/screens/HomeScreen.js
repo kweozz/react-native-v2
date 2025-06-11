@@ -13,22 +13,11 @@ const categoryNames = {
   "68422e818f346b6d0e57311d": "Green Tea"
 };
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("price-asc");
-  const [wishlist, setWishlist] = useState([]); // Hier bewaar je de wishlist
-
-  // Deze functie voegt een product toe aan de wishlist als het er nog niet in zit,
-  // en verwijdert het als het er al in zit (toggle functionaliteit).
-  const toggleWishlist = (product) => {
-    setWishlist((prev) =>
-      prev.find((p) => p.id === product.id)
-        ? prev.filter((p) => p.id !== product.id) // Verwijder als hij er al in zit
-        : [...prev, product] // Voeg toe als hij er nog niet in zit
-    );
-  };
 
   useEffect(() => {
     fetch('https://api.webflow.com/v2/sites/67b358f17af1e77acbdef54c/products', {
@@ -68,7 +57,10 @@ const HomeScreen = ({ navigation }) => {
     return 0;
   });
 
-  const uniqueCategories = [...new Set(products.map((p) => p.category))];
+  const uniqueCategories = [...new Set(products.map((p) => p.category))]; 
+// products.map((p) => p.category) maakt een array van alle categorieën van je producten.
+//new Set(...) haalt de dubbele categorieën eruit, zodat je alleen unieke categorieën overhoudt.
+//[...new Set(...)] gebruikt de spread-operator om de unieke categorieën uit de Set te halen en in een gewone array te stoppen.
 
   return (
     <View style={styles.container}>
@@ -93,8 +85,8 @@ const HomeScreen = ({ navigation }) => {
             alignItems: 'center',
           }}
           // Hier zou je eventueel naar een WishlistScreen kunnen navigeren
-          onPress={() => { /* eventueel navigatie naar wishlist */ }}
-        >
+        onPress={() => navigation.navigate('Wishlist')}
+>
           <Icon name="heart" size={20} color="#fff" style={{ marginRight: 6 }} />
           <Text style={{ color: '#fff', fontFamily: 'Golos-Bold' }}>
             Wishlist ({wishlist.length})
