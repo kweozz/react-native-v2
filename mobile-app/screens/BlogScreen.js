@@ -16,7 +16,7 @@ const BlogScreen = ({ navigation }) => {
       .then((data) => {
         if (data.items) {
           const mappedBlogs = data.items.map((item) => ({
-            id: item.id, // <-- Gebruik 'id' i.p.v. '_id'
+            id: item.id, 
             title: item.fieldData.name,
             description: item.fieldData['post-summary'],
             date: new Date(item.createdOn).toLocaleDateString(),

@@ -104,16 +104,17 @@ const AppNavigator = () => {
 // een state is een manier om gegevens op te slaan die kunnen veranderen in je component
   // wishlist is een array die de producten bevat die de gebruiker aan zijn/haar wishlist heeft toegevoegd$
   // setWishlist is een functie die gebruikt wordt om de wishlist state bij te werken
-  // Deze functie wordt gebruikt om de wishlist te beheren
-  // en kan producten toevoegen of verwijderen
-  // Functie om producten toe te voegen/verwijderen uit wishlist
+  
   const toggleWishlist = (product) => {
     setWishlist(prev =>
-      prev.find((p) => p.id === product.id)
-        ? prev.filter((p) => p.id !== product.id)
-        : [...prev, product]
+      prev.find((p) => p.id === product.id)   // Check of product al in wishlist zit (via .find).
+        ? prev.filter((p) => p.id !== product.id) // Als het product er al in zit, verwijder het
+        : [...prev, product] // Anders voeg het toe
     );
   };
+
+//[...] (spread syntax) zorgt voor immutabiliteit — je maak een nieuwe array zonder de oude muteren.
+  // Dit is belangrijk in React om te zorgen dat de UI correct wordt bijgewerkt. Immutabiliteit betekent dat ik de originele data niet verander, maar een kopie maak met aanpassingen. In React is dit belangrijk omdat React dan goed ziet dat er iets veranderd is, en zo de juiste componenten opnieuw rendert
 
   return (
     <NavigationContainer>

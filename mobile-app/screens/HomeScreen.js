@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("price-asc");
-
+// useEffect is een React Hook die code uitvoert bij het laden van het component (of als dependencies veranderen)
   useEffect(() => {
     fetch('https://api.webflow.com/v2/sites/67b358f17af1e77acbdef54c/products', {
       headers: {
@@ -28,11 +28,14 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        // .map() is een array method om elk item om te zetten naar een nieuw object
         const mappedProducts = data.items.map((item) => ({
+           // object destructuring: haalt velden uit het item object
           id: item.product.id,
           title: item.product.fieldData.name,
           smallDescription: item.product.fieldData['small-description'],
           description: item.product.fieldData.description,
+          // Arrow function en ternary operator: als er een prijs is, deel door 100, anders 0
           price: item.skus[0]?.fieldData?.price?.value
             ? item.skus[0].fieldData.price.value / 100
             : 0,
@@ -41,15 +44,15 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
             : null,
           category: categoryNames[item.product.fieldData.category?.[0]] || "Unknown",
         }));
-        setProducts(mappedProducts);
+        setProducts(mappedProducts); // Zet de producten in de state
       })
       .catch((err) => console.error('Error:', err));
   }, []);
-
+ // Filteren op categorie en zoekterm (array methods: .filter(), .includes())
   const filteredProducts = products
     .filter((p) => (selectedCategory ? p.category === selectedCategory : true))
     .filter((p) => p.title.toLowerCase().includes(searchQuery.toLowerCase()));
-
+  // Sorteren op prijs of naam (array method: .sort())
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortOption === "price-asc") return a.price - b.price;
     if (sortOption === "price-desc") return b.price - a.price;
@@ -62,9 +65,12 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
 // products.map((p) => p.category) maakt een array van alle categorieën van je producten.
 //new Set(...) haalt de dubbele categorieën eruit, zodat je alleen unieke categorieën overhoudt.
 //[...new Set(...)] gebruikt de spread-operator om de unieke categorieën uit de Set te halen en in een gewone array te stoppen.
+// waarom maken we een nieuwe array? Omdat we de unieke categorieën willen gebruiken in de CategoryPicker component, die een array verwacht. 
+
 
   return (
     <View style={styles.container}>
+            {/* Props doorgeven aan Search, CategoryPicker, SortPicker */}
       <Text style={styles.heading}>Our Tea's</Text>
       <Search value={searchQuery} onChange={setSearchQuery} />
       <CategoryPicker
@@ -76,6 +82,7 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
 
       {/* Wishlist-knop rechtsboven, toont het aantal producten in de wishlist */}
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
+        {/* Wishlist-knop: props doorgeven aan Button, en Icon als child */}
         <Button
           title={`Wishlist (${wishlist.length})`}
           onPress={() => navigation.navigate('Wishlist')}
@@ -92,7 +99,7 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
           <Icon name="heart" size={20} color="#fff" style={{ marginRight: 6 }} />
         </Button>
       </View>
-
+{/* ProductCard krijgt props: data, wishlistActive, onWishlistPress */}
       <ScrollView contentContainerStyle={styles.cardContainer}>
         <View style={styles.row}>
           {sortedProducts.map((product) => (
@@ -102,11 +109,11 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
               subtitle={product.smallDescription}
               price={product.price}
               image={product.image}
-              onPress={() => navigation.navigate('Details', { product })}
+              onPress={() => navigation.navigate('Details', { product })} 
               // Geef door of het product in de wishlist zit
-              wishlistActive={wishlist.some((p) => p.id === product.id)}
+              wishlistActive={wishlist.some((p) => p.id === product.id)} // array method: .some() is een boolean die aangeeft of er een product in de wishlist zit met dezelfde id
               // Geef de toggle functie door aan het hartje
-              onWishlistPress={() => toggleWishlist(product)}
+              onWishlistPress={() => toggleWishlist(product)} // arrow function als prop
             />
           ))}
         </View>
