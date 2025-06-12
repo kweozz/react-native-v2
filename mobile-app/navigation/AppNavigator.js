@@ -10,11 +10,11 @@ import BlogScreen from '../screens/BlogScreen';
 import LandingPage from '../screens/LandingPage';
 import BlogDetails from '../screens/BlogDetails';
 import WishlistScreen from '../screens/WishlistScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// 👇 ShopStack bevat nu ook ProductDetails (dus 'Details' bestaat echt!)
 const ShopStack = ({ wishlist, toggleWishlist }) => (
   <Stack.Navigator>
     <Stack.Screen
@@ -89,6 +89,7 @@ const BlogStack = () => (
   </Stack.Navigator>
 );
 
+
 const AppNavigator = () => {
   const [wishlist, setWishlist] = useState([]);
 
@@ -111,6 +112,7 @@ const AppNavigator = () => {
             else if (route.name === 'Shop') iconName = focused ? 'cart' : 'cart-outline';
             else if (route.name === 'Blog') iconName = focused ? 'book' : 'book-outline';
             else if (route.name === 'Wishlist') iconName = focused ? 'heart' : 'heart-outline';
+            else if (route.name === 'About') iconName = focused ? 'information-circle' : 'information-circle-outline';
 
             return <Icon name={iconName} size={size} color={color} />;
           },
@@ -158,6 +160,11 @@ const AppNavigator = () => {
             />
           )}
         </Tab.Screen>
+        <Tab.Screen
+          name="About"
+          component={AboutScreen}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

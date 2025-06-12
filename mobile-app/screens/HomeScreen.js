@@ -5,6 +5,7 @@ import SortPicker from '../components/SortPicker';
 import Search from '../components/Search';
 import ProductCard from '../components/ProductCard';
 import Icon from 'react-native-vector-icons/Ionicons'; // Voor het wishlist-icoon
+import Button from '../components/Button';
 
 const categoryNames = {
   "": "All",
@@ -75,23 +76,21 @@ const HomeScreen = ({ navigation, wishlist = [], toggleWishlist }) => {
 
       {/* Wishlist-knop rechtsboven, toont het aantal producten in de wishlist */}
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 }}>
-        <TouchableOpacity
+        <Button
+          title={`Wishlist (${wishlist.length})`}
+          onPress={() => navigation.navigate('Wishlist')}
           style={{
-            backgroundColor: '#222020',
-            borderRadius: 20,
-            paddingVertical: 6,
-            paddingHorizontal: 16,
             flexDirection: 'row',
             alignItems: 'center',
+            backgroundColor: '#222020',
+            fontSize: 12,
+            paddingVertical: 6,
+            paddingHorizontal: 16,
           }}
-          // Hier zou je eventueel naar een WishlistScreen kunnen navigeren
-        onPress={() => navigation.navigate('Wishlist')}
->
+          textStyle={{ color: '#fff', fontFamily: 'Golos-Bold' }}
+        >
           <Icon name="heart" size={20} color="#fff" style={{ marginRight: 6 }} />
-          <Text style={{ color: '#fff', fontFamily: 'Golos-Bold' }}>
-            Wishlist ({wishlist.length})
-          </Text>
-        </TouchableOpacity>
+        </Button>
       </View>
 
       <ScrollView contentContainerStyle={styles.cardContainer}>
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
     marginTop: 64,
     textAlign: 'left',
     textTransform: 'uppercase',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   cardContainer: {
     flexDirection: 'row',

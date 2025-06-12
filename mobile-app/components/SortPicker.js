@@ -11,7 +11,7 @@ const SortPicker = ({ sortOption, onSortChange }) => (
       style={styles.picker}
       itemStyle={styles.pickerItem}
     >
-      <Picker.Item label="Prijs oplopend" value="price-asc" style={styles.pickerItem} />
+      <Picker.Item label="price " value="price-asc" style={styles.pickerItem} />
       <Picker.Item label="Prijs aflopend" value="price-desc" style={styles.pickerItem} />
       <Picker.Item label="Naam A-Z" value="name-asc" style={styles.pickerItem} />
       <Picker.Item label="Naam Z-A" value="name-desc" style={styles.pickerItem} />
@@ -21,14 +21,23 @@ const SortPicker = ({ sortOption, onSortChange }) => (
 
 const styles = StyleSheet.create({
   pickerWrapper: {
-    backgroundColor: '#fff',
+       backgroundColor: '#fff',
     borderRadius: 10,
     borderColor: '#ccc',
     overflow: 'hidden', // zorgt dat de picker afgerond lijkt
     marginBottom: 20,
+    borderWidth: 2,
+    borderStyle: 'solid', // zorgt voor een zichtbare rand
+    width: 'auto',
+    marginHorizontal: 10,
   },
   picker: {
     width: '100%',
+    color: '#222020',
+    // fontSize: 16, // werkt niet op Android
+    // fontFamily: 'Golos-Regular', // werkt niet op Android  
+    // Op Android werkt fontSize niet in de Picker, dus we gebruiken alleen kleur
+    // Op iOS werkt fontFamily soms, maar niet altijd, dus we laten het weg
     // fontFamily werkt meestal niet!
   },
   pickerItem: {

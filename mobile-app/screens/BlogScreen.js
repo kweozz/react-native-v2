@@ -58,7 +58,7 @@ const BlogScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <BlogCard blog={item} onPress={handleBlogPress} />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id} 
         contentContainerStyle={styles.list}
       />
     </View>
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    justifyContent: 'center', 
   },
   heading: {
     marginTop: 64,
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
     color: '#888',
     textAlign: 'center',
     fontFamily: 'Golos-Regular',
+
   },
 });
 

@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 
-const Button = ({ title, onPress, style }) => {
+const Button = ({ title, onPress, style, textStyle, children }) => {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
         style,
-        pressed && styles.buttonPressed, // Apply pressed style
+        pressed && styles.buttonPressed,
       ]}
     >
-      <Text style={styles.buttonText}>{title}</Text>
+      {children}
+      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
     </Pressable>
   );
 };
@@ -19,18 +20,23 @@ const Button = ({ title, onPress, style }) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#222020',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 10,
+    borderRadius: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
   },
   buttonPressed: {
-    backgroundColor: '#5C5C5C', // Slightly lighter/different color when pressed
+    backgroundColor: '#444', // iets lichter bij indrukken
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: '#fff',
+    fontFamily: 'Golos-Bold',
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
 });
 
