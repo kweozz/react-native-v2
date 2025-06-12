@@ -22,11 +22,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     borderColor: '#ccc',
-    overflow: 'hidden', // zorgt dat de picker afgerond lijkt
+    overflow: 'hidden', // zorgt dat de picker afgerond lijkt  omdat de paddingtop overstijgt de border-radius
     marginBottom: 10,
     borderWidth: 2,
     borderStyle: 'solid', // zorgt voor een zichtbare rand
-    width: 'auto',
     marginHorizontal: 10,
   },
 

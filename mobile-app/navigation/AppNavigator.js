@@ -126,8 +126,12 @@ const AppNavigator = () => {
         >
           {props => <LandingPage {...props} />}
         </Tab.Screen>
-
-        {/* ✅ SHOP met stack, inclusief wishlist props */}
+   <Tab.Screen
+          name="About"
+          component={AboutScreen}
+          options={{ headerShown: false }}
+        />
+        {/*SHOP met stack, inclusief wishlist props */}
         <Tab.Screen
           name="Shop"
           options={{ headerShown: false }}
@@ -140,14 +144,7 @@ const AppNavigator = () => {
             />
           )}
         </Tab.Screen>
-
-        <Tab.Screen
-          name="Blog"
-          component={BlogStack}
-          options={{ headerShown: false }}
-        />
-
-        {/* ✅ Wishlist krijgt props en navigeert correct naar Details in Shop */}
+              {/* Wishlist krijgt props en navigeert correct naar Details in Shop */}
         <Tab.Screen
           name="Wishlist"
           options={{ headerShown: false }}
@@ -160,9 +157,10 @@ const AppNavigator = () => {
             />
           )}
         </Tab.Screen>
+
         <Tab.Screen
-          name="About"
-          component={AboutScreen}
+          name="Blog"
+          component={BlogStack}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>

@@ -90,7 +90,7 @@ const LandingPage = ({ navigation }) => {
             <TouchableOpacity
               key={category.id}
               style={styles.categoryCard}
-              onPress={() => navigation.navigate('Shop', { selectedCategory: category.id })}
+              onPress={() => navigation.navigate('Shop', { categoryId: category.id })} // Navigate to Shop with category
             >
               <Image source={category.image} style={styles.categoryImage} />
               <Text style={styles.categoryName}>{category.name}</Text>
@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a dark overlay for better text visibility
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // een overlay geadd voor betere leesbaarheid
     justifyContent: 'center',
     padding: 20,
   },
   heading: {
     fontSize: 44,
-    fontWeight: 'bold',
+    fontFamily: 'Golos-Bold',
     textTransform: 'uppercase',
     color: '#FFFFFF',
     marginBottom: 20,
@@ -163,14 +163,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#222020', 
     paddingVertical: 15,
     paddingHorizontal: 40,
-    borderRadius: 10,
+    borderRadius: 20,
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-   fontFamily: 'Golos-Bold',
-    textAlign: 'center',
-  },
+ 
   categoriesContainer: {
     padding: 20,
   },

@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 2,
     borderStyle: 'solid', // zorgt voor een zichtbare rand
-    width: 'auto',
     marginHorizontal: 10,
   },
   picker: {

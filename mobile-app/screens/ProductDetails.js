@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler'; // Import ScrollView voor scrollbare inhoud
 
 const ProductDetails = ({ route }) => {
   const { product } = route.params; // Haal het product op uit de route parameters

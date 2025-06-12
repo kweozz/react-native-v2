@@ -30,11 +30,16 @@ const styles = StyleSheet.create({
   date: { fontSize: 14, color: '#888', marginBottom: 5 },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Golos-Bold',
     color: '#222020',
     textTransform: 'uppercase',
   },
-  description: { fontSize: 14, color: '#666', marginTop: 5 },
+  description: { 
+    fontSize: 14, color: '#222020',
+    marginBottom: 10,
+    fontFamily: 'Golos-Regular',
+    lineHeight: 20,
+   },
 });
 
 export default BlogCard;
