@@ -1,9 +1,11 @@
+// Importeer React en benodigde navigatiecomponenten
 import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+// Importeer je schermen (pages)
 import HomeScreen from '../screens/HomeScreen';
 import ProductDetails from '../screens/ProductDetails';
 import BlogScreen from '../screens/BlogScreen';
@@ -12,11 +14,14 @@ import BlogDetails from '../screens/BlogDetails';
 import WishlistScreen from '../screens/WishlistScreen';
 import AboutScreen from '../screens/AboutScreen';
 
+// Maak navigators aan
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+// ShopStack is een stack navigator voor de Shop tab
 const ShopStack = ({ wishlist, toggleWishlist }) => (
   <Stack.Navigator>
+    {/* HomeScreen krijgt props mee via render-functie */}
     <Stack.Screen
       name="ShopHome"
       options={{ headerShown: false }}
@@ -29,10 +34,12 @@ const ShopStack = ({ wishlist, toggleWishlist }) => (
         />
       )}
     </Stack.Screen>
+    {/* Details scherm voor producten */}
     <Stack.Screen
       name="Details"
       component={ProductDetails}
       options={({ route }) => ({
+        // Haal de titel uit de route params (props)
         title: route.params.product.title,
         headerStyle: {
           backgroundColor: '#fff',
@@ -55,6 +62,7 @@ const ShopStack = ({ wishlist, toggleWishlist }) => (
   </Stack.Navigator>
 );
 
+// BlogStack is een stack navigator voor de Blog tab
 const BlogStack = () => (
   <Stack.Navigator>
     <Stack.Screen
@@ -89,10 +97,16 @@ const BlogStack = () => (
   </Stack.Navigator>
 );
 
-
+// Hoofdcomponent voor navigatie
 const AppNavigator = () => {
+  // State voor wishlist (array van producten)
   const [wishlist, setWishlist] = useState([]);
-
+// een state is een manier om gegevens op te slaan die kunnen veranderen in je component
+  // wishlist is een array die de producten bevat die de gebruiker aan zijn/haar wishlist heeft toegevoegd$
+  // setWishlist is een functie die gebruikt wordt om de wishlist state bij te werken
+  // Deze functie wordt gebruikt om de wishlist te beheren
+  // en kan producten toevoegen of verwijderen
+  // Functie om producten toe te voegen/verwijderen uit wishlist
   const toggleWishlist = (product) => {
     setWishlist(prev =>
       prev.find((p) => p.id === product.id)
@@ -103,35 +117,37 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
+      {/* Tab navigator voor de hoofdnavigatie */}
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
+            // Kies het juiste icoon op basis van de tab naam
             let iconName;
-
             if (route.name === 'Home') iconName = focused ? 'home' : 'home-outline';
             else if (route.name === 'Shop') iconName = focused ? 'cart' : 'cart-outline';
             else if (route.name === 'Blog') iconName = focused ? 'book' : 'book-outline';
             else if (route.name === 'Wishlist') iconName = focused ? 'heart' : 'heart-outline';
             else if (route.name === 'About') iconName = focused ? 'information-circle' : 'information-circle-outline';
-
             return <Icon name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: '#222020',
           tabBarInactiveTintColor: 'gray',
         })}
       >
+        {/* LandingPage als Home tab */}
         <Tab.Screen
           name="Home"
           options={{ headerShown: false }}
         >
           {props => <LandingPage {...props} />}
         </Tab.Screen>
-   <Tab.Screen
+        {/* About tab */}
+        <Tab.Screen
           name="About"
           component={AboutScreen}
           options={{ headerShown: false }}
         />
-        {/*SHOP met stack, inclusief wishlist props */}
+        {/* Shop tab met ShopStack */}
         <Tab.Screen
           name="Shop"
           options={{ headerShown: false }}
@@ -144,7 +160,7 @@ const AppNavigator = () => {
             />
           )}
         </Tab.Screen>
-              {/* Wishlist krijgt props en navigeert correct naar Details in Shop */}
+        {/* Wishlist tab */}
         <Tab.Screen
           name="Wishlist"
           options={{ headerShown: false }}
@@ -157,7 +173,7 @@ const AppNavigator = () => {
             />
           )}
         </Tab.Screen>
-
+        {/* Blog tab met BlogStack */}
         <Tab.Screen
           name="Blog"
           component={BlogStack}
